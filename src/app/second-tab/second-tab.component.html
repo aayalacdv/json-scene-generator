@@ -1,0 +1,102 @@
+<main >
+    <!-- main zone -->
+    <div class="main">
+        <div class="forms">
+            <div>
+                <!-- this is the thing to get the created characters  onInteract with-->
+                <mat-form-field>
+                    <mat-select required [formControl]="charactersForm" placeholder="Select a character" #select>
+                        <mat-option>{{null}}</mat-option>
+                        <mat-option *ngFor="let character of characters" [value]="character">
+                            {{ character }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="charactersForm.hasError('required')">
+                        Character name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <!-- this is the thing to select the dialogue mode -->
+                <mat-slide-toggle [formControl]="dialogueTypeForm" color="primary" class="example-margin">
+                    Create a quiz?
+                </mat-slide-toggle>
+            </div>
+
+            <div *ngIf="!dialogueTypeForm.value">
+                <!-- this is the thing to make the text input  -->
+                <form [formGroup]="simpleDialogueForm">
+                    <p> <strong>{{select.value}}</strong></p>
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="linesForm" matInput placeholder="Insert the text with the character">
+                    </mat-form-field>
+                    <mat-error
+                        *ngIf="simpleDialogueForm.controls.linesForm.hasError('required') && simpleDialogueForm.controls.linesForm.touched">
+                        Dialogue text from character is required
+                    </mat-error>
+                    <p><strong>player</strong></p>
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="playerForm" matInput placeholder="Insert the text with the character">
+                    </mat-form-field>
+                    <mat-error
+                        *ngIf="simpleDialogueForm.controls.playerForm.hasError('required') && simpleDialogueForm.controls.playerForm.touched">
+                        Dialogue text from player is required
+                    </mat-error>
+                </form>
+                <button mat-raised-button color="primary"
+                    [disabled]="simpleDialogueFormHasErros() || charactersForm.invalid"
+                    (click)="onAddLineButtonClicked()"> Add line</button>
+            </div>
+
+            <div *ngIf="dialogueTypeForm.value">
+                <!-- this is the thing to make the question and the answers -->
+                <form [formGroup]="quizDialogueForm">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="question" matInput placeholder="Insert a question">
+                    </mat-form-field>
+                    <mat-error
+                        *ngIf="quizDialogueForm.controls.question.hasError('required') && quizDialogueForm.controls.question.touched">
+                        A question is required
+                    </mat-error>
+                    <p>Add possible answers</p>
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="answer" matInput placeholder="Insert a possible answer" #answer>
+                    </mat-form-field>
+                    <mat-error
+                        *ngIf="quizDialogueForm.controls.answer.hasError('required') && quizDialogueForm.controls.answer.touched ">
+                        An answer is required text from player is required
+                    </mat-error>
+                </form>
+                <button mat-raised-button [disabled]="quizDialogueForm.invalid || charactersForm.invalid"
+                    color="primary" (click)="onAddAnswerClicked(answer.value)"> Add andwer</button>
+
+
+            </div>
+            <button mat-raised-button [disabled]="!canAddInteraction()" color="primary"
+                (click)="onEndInteractionClicked()"> End
+                interaction</button>
+
+            <button mat-raised-button [disabled]="interactions.length == 0" color="primary"
+                (click)="finishInteraction()"> Next </button>
+        </div>
+
+        <div class="preview_zone">
+                <div *ngIf="!dialogueTypeForm.value" class="interactions">
+                    <!-- this is the place where we can see what we're doing -->
+                    <p *ngFor="let line of lines">
+                        <strong>{{line.character}}</strong>: {{line.dialogueText}}
+                    </p>
+                </div>
+
+                <div *ngIf="dialogueTypeForm.value" class="answers">
+                    <p *ngIf="quizDialogueForm.controls.question.value"><strong>Question: </strong> {{quizDialogueForm.controls.question.value}}</p>
+                    <p *ngFor="let answer of answers; let i = index">
+                        <strong>Option {{i + 1}}</strong> {{ answer }}
+                    </p>
+                </div>
+
+        </div>
+
+    </div>
+</main>

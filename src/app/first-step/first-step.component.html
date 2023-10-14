@@ -1,0 +1,36 @@
+<div class="first-step-container">
+    <div class="scene-input-container">
+        <mat-form-field>
+            <mat-label>Scene</mat-label>
+            <input matInput [formControl]="sceneFormControl" placeholder="Insert a sceneName">
+            <mat-error *ngIf="sceneFormControl.hasError('required')">
+                scene name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="character-input-container">
+        <mat-form-field>
+            <mat-label>Character</mat-label>
+            <input type="email" matInput [formControl]="characterName" placeholder="CharacterName">
+            <mat-error *ngIf="characterName.hasError('required')">
+                Character name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <button mat-raised-button type="submit" [disabled]="!characterName.valid"
+            (click)="onSubmitCharacter(characterName.value!)" color="primary">Add</button>
+    </div>
+
+    <div class="characters-zone">
+        <mat-card class="character-item-container" *ngFor="let character of characters; let i = index;">
+            <mat-icon>person_pin</mat-icon>
+            <strong class="charcter-name">{{character}}</strong>
+            <button mat-icon-button color="primary" (click)="deleteCharacter(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-card>
+    </div>
+
+    <button mat-raised-button *ngIf="canGoNextStep()"
+        (click)="advanceStepper()" color="primary">Next</button>
+</div>

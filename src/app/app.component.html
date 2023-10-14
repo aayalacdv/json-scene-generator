@@ -1,0 +1,38 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: grid;
+    place-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .main-container {
+    width: 60vw;
+    height: 80vh;
+  }
+</style>
+
+<div class="main-container" *ngIf="sceneFormValues$ | async as sceneFormValues">
+{{ sceneFormValues$ | async | json}}
+  <mat-horizontal-stepper #stepper>
+
+
+    <mat-step label="Step 1">
+      <first-step (goNext)="goFromStepOneToStepTwo($event)"></first-step>
+    </mat-step>
+
+    <mat-step label="Step 2">
+      <second-tab (addInteraction)="goFromStepTwoToStepThree($event)" [characters]="sceneFormValues.characters!"></second-tab>
+    </mat-step>
+
+    <mat-step label="Step 3">
+      <button (click)="generateJson(sceneFormValues)">Generate Json</button>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

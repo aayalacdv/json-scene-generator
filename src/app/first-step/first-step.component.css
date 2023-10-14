@@ -1,0 +1,53 @@
+.first-step-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1.5rem;
+}
+
+.first-step-container div{
+    width: 60%;
+}
+
+.scene-input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.character-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.character-input-container mat-form-field {
+    width: 100%;
+}
+
+.character-input-container button {
+    width: 10rem;
+    padding: 1rem;
+}
+
+.characters-zone {
+    width: 20rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.character-item-container {
+    display: flex;
+    flex-direction: row;
+
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.character-name {
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+}
