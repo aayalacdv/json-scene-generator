@@ -19,9 +19,7 @@
 </style>
 
 <div class="main-container" *ngIf="sceneFormValues$ | async as sceneFormValues">
-{{ sceneFormValues$ | async | json}}
   <mat-horizontal-stepper #stepper>
-
 
     <mat-step label="Step 1">
       <first-step (goNext)="goFromStepOneToStepTwo($event)"></first-step>
